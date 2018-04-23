@@ -5,20 +5,20 @@
  */
 package snake;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author alu53788313f
  */
-public class Snake  {
-
-    private ArrayList<Node> listNodes;
-    private DirectionType direction;
+public class Node {
     
-    public Snake(){
-    listNodes = new ArrayList (2);
-    direction = DirectionType.NO_DIRECTION; 
+    private int row;
+    private int col;
     
+    public Node(){
+        
+        row = 0;
+        col = 0;
+        
     }
+    
 }
