@@ -5,20 +5,49 @@
  */
 package snake;
 
+import java.awt.Color;
+
 /**
  *
  * @author alu53788313f
  */
 public class Node {
     
-    private int row;
-    private int col;
+    public int row;
+    public int col;
+    public Color color;
     
-    public Node(){
+    public Node(int row , int col , Color color){
         
-        row = 0;
-        col = 0;
+        this.row = row;
+        this.col = col;
+        this.color=color;
         
     }
+
+    public int getRow() {
+        return row;
+    }
+
+    public int getCol() {
+        return col;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setRow(int row) {
+        this.row = row;
+    }
+
+    public void setCol(int col) {
+        this.col = col;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+    
     
 }

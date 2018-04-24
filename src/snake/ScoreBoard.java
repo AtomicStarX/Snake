@@ -5,10 +5,33 @@
  */
 package snake;
 
+import javax.swing.JLabel;
+
 /**
  *
  * @author alu53788313f
  */
-public class ScoreBoard {
+public class ScoreBoard extends JLabel implements IncrementScore {
     
+    public static int score;
+    
+    public ScoreBoard() {
+        super();
+        score = 0;
+        this.setText("Score : " + score);
+    }
+    
+    public void increment(int points) {
+        score += points;
+        this.setText("Score : " + score);
+    }
+    
+    public void reset() {
+        score = 0;
+        this.setText("Score : " + score);
+    }
+    
+    public static int getScore(){
+        return score;
+    }
 }
