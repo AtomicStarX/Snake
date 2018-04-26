@@ -16,24 +16,29 @@ import java.util.ArrayList;
 public class Snake {
 
     static void moveSnake() {
-        Node firstNode = listNodes.get(0);
-        switch (direction){
-                case DOWN:
-                    firstNode.setRow(firstNode.row +1 );
-                    break;
-                    
-                case UP:
-                    firstNode.setRow(firstNode.row - 1 );
-                    break;
-                    
-                case RIGHT:
-                    firstNode.setRow(firstNode.col + 1 );
-                    break;
-                    
-                case LEFT:
-                    firstNode.setRow(firstNode.col - 1 );
-                    break;
+        Node head = listNodes.get(0);
+        Node firstNode = new Node(listNodes.get(0).getRow(), listNodes.get(0).getCol(), listNodes.get(0).getColor());
+        switch (direction) {
+            case DOWN:
+                firstNode.setRow(firstNode.getRow() + 1);
+                break;
+
+            case UP:
+                firstNode.setRow(firstNode.getRow() - 1);
+                break;
+
+            case RIGHT:
+                firstNode.setCol(firstNode.getCol() + 1);
+                break;
+
+            case LEFT:
+                firstNode.setCol(firstNode.getCol() - 1);
+                break;
         }
+        listNodes.add(0, firstNode);
+        head.setColor(Color.GREEN);
+        listNodes.remove(listNodes.size() - 1);
+
     }
 
     private static ArrayList<Node> listNodes;
@@ -41,21 +46,48 @@ public class Snake {
 
     public Snake() {
         listNodes = new ArrayList(2);
-        direction = DirectionType.NO_DIRECTION;
-        Node node1 = new Node(Board.NUM_ROWS / 2, Board.NUM_COLS / 2, Color.BLACK);
+        direction = DirectionType.RIGHT;
+        Node node1 = new Node(Board.NUM_ROWS / 2, Board.NUM_COLS / 2, Color.RED);
         Node node2 = new Node(Board.NUM_ROWS / 2, Board.NUM_COLS / 2 - 1, Color.GREEN);
         listNodes.add(node1);
         listNodes.add(node2);
-        
+
     }
 
     public void draw(Graphics g, int squareWidth, int squareHeight) {
         for (Node node : listNodes) {
-            Util.drawSquare(g, node.row, node.col, node.color, squareWidth, squareHeight);
+            Util.drawSquare(g, node.getRow(), node.getCol(), node.getColor(), squareWidth, squareHeight);
         }
     }
-    
-    public DirectionType getDirectionType(){
+
+    public DirectionType getDirection() {
         return direction;
+    }
+
+    public void setDirectionType(DirectionType direction) {
+        this.direction = direction;
+    }
+
+    public boolean canEat() {
+        Node firstNode = listNodes.get(0);
+        if (firstNode.getRow() == Food.getRow() && firstNode.getCol() == Food.getCol()) {
+            listNodes.add(new Node(listNodes.get(1).getRow(), listNodes.get(1).getCol(), listNodes.get(1).getColor()));
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public Node getSnakeHead() {
+        return listNodes.get(0);
+    }
+
+    public boolean checkColisionWithSnake(int row, int col) {
+        for (Node nodes : listNodes) {
+            if (row == nodes.getRow() & col == nodes.getCol()) {
+                return true;
+            }
+        }
+        return false;
     }
 }

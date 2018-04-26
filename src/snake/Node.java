@@ -13,9 +13,9 @@ import java.awt.Color;
  */
 public class Node {
     
-    public int row;
-    public int col;
-    public Color color;
+    private int row;
+    private int col;
+    private Color color;
     
     public Node(int row , int col , Color color){
         

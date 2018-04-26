@@ -16,6 +16,7 @@ public class Game extends javax.swing.JFrame {
      */
     public Game() {
         initComponents();
+        board.setScore(scoreBoard);
     }
 
     /**
@@ -33,7 +34,7 @@ public class Game extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuFile = new javax.swing.JMenu();
         jMenuInitGame = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuReset = new javax.swing.JMenuItem();
         jMenuEdit = new javax.swing.JMenu();
         jMenuItemChangeColorSnake = new javax.swing.JMenuItem();
 
@@ -69,11 +70,16 @@ public class Game extends javax.swing.JFrame {
 
         jMenuFile.setText("File");
 
-        jMenuInitGame.setText("jMenuItem1");
+        jMenuInitGame.setText("Init Game");
+        jMenuInitGame.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuInitGameActionPerformed(evt);
+            }
+        });
         jMenuFile.add(jMenuInitGame);
 
-        jMenuItem2.setText("jMenuItem2");
-        jMenuFile.add(jMenuItem2);
+        jMenuReset.setText("Reset");
+        jMenuFile.add(jMenuReset);
 
         jMenuBar1.add(jMenuFile);
 
@@ -88,6 +94,11 @@ public class Game extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jMenuInitGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuInitGameActionPerformed
+        // TODO add your handling code here:
+        board.initGame();
+    }//GEN-LAST:event_jMenuInitGameActionPerformed
 
     /**
      * @param args the command line arguments
@@ -131,8 +142,8 @@ public class Game extends javax.swing.JFrame {
     private javax.swing.JMenu jMenuEdit;
     private javax.swing.JMenu jMenuFile;
     private javax.swing.JMenuItem jMenuInitGame;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItemChangeColorSnake;
+    private javax.swing.JMenuItem jMenuReset;
     private snake.ScoreBoard scoreBoard;
     // End of variables declaration//GEN-END:variables
 }
