@@ -14,36 +14,51 @@ import java.awt.Graphics;
  */
 public class Food {
     
-    private Node food;
-    private static int row;
-    private static int col;
+    private int row;
+    private int col;
+    protected Color color; 
     
     public Food(){
         row = getRandomRow();
         col = getRandomCol();
-        food = new Node(row,col,Color.WHITE);
+        color = Color.WHITE;
     }
 
     public void draw(Graphics g, int squareWidth, int squareHeight) {
-        Util.drawSquare(g, food.getRow(), food.getCol(), food.getColor(), squareWidth, squareHeight);
+        Util.drawSquare(g, row, col, color, squareWidth, squareHeight);
     }
-    public static int getRow() {
+    public int getRow() {
         return row;
     }
 
-    public static int getCol() {
+    public int getCol() {
         return col;
     }
+    public Color getColor(){
+        return color;
+    }
+    
+    public void setColor(Color color){
+        this.color = color;
+    }
 
-    public static int getRandomRow() {
+    public int getRandomRow() {
         int randomRow = (int) (Math.random() * (Board.NUM_ROWS-1) +1);
         return randomRow;
     }
 
-    public static int getRandomCol() {
+    public int getRandomCol() {
         int randomCol = (int) (Math.random() * (Board.NUM_ROWS-1) +1);
         return randomCol;
     }
+    public static Food createANewFood(Snake snake){
+        Food food = new Food();
+        if(snake.checkColisionWithSnake(food.getRow(), food.getCol())){
+            return createANewFood(snake);
+        }
+        return food;
+    }
+    
 }
 
 

@@ -50,10 +50,9 @@ public class Game extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(scoreBoard, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 290, 490, 20));
+        getContentPane().add(scoreBoard, java.awt.BorderLayout.PAGE_END);
 
-        board.setBackground(new java.awt.Color(51, 204, 255));
+        board.setBackground(new java.awt.Color(51, 255, 255));
 
         javax.swing.GroupLayout boardLayout = new javax.swing.GroupLayout(board);
         board.setLayout(boardLayout);
@@ -63,10 +62,10 @@ public class Game extends javax.swing.JFrame {
         );
         boardLayout.setVerticalGroup(
             boardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 290, Short.MAX_VALUE)
+            .addGap(0, 293, Short.MAX_VALUE)
         );
 
-        getContentPane().add(board, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 490, 290));
+        getContentPane().add(board, java.awt.BorderLayout.CENTER);
 
         jMenuFile.setText("File");
 

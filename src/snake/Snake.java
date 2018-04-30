@@ -15,7 +15,7 @@ import java.util.ArrayList;
  */
 public class Snake {
 
-    static void moveSnake() {
+    public void moveSnake(boolean grow) {
         Node head = listNodes.get(0);
         Node firstNode = new Node(listNodes.get(0).getRow(), listNodes.get(0).getCol(), listNodes.get(0).getColor());
         switch (direction) {
@@ -37,12 +37,13 @@ public class Snake {
         }
         listNodes.add(0, firstNode);
         head.setColor(Color.GREEN);
-        listNodes.remove(listNodes.size() - 1);
-
+        if (! grow) {
+            listNodes.remove(listNodes.size() - 1);
+        }
     }
 
-    private static ArrayList<Node> listNodes;
-    private static DirectionType direction;
+    private  ArrayList<Node> listNodes;
+    private  DirectionType direction;
 
     public Snake() {
         listNodes = new ArrayList(2);
@@ -68,10 +69,9 @@ public class Snake {
         this.direction = direction;
     }
 
-    public boolean canEat() {
-        Node firstNode = listNodes.get(0);
-        if (firstNode.getRow() == Food.getRow() && firstNode.getCol() == Food.getCol()) {
-            listNodes.add(new Node(listNodes.get(1).getRow(), listNodes.get(1).getCol(), listNodes.get(1).getColor()));
+    public boolean canEat(Food food) {
+        Node firstNode = getSnakeHead();
+            if (firstNode.getRow() == food.getRow() && firstNode.getCol() == food.getCol()) {
             return true;
         } else {
             return false;
