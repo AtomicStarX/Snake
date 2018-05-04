@@ -5,18 +5,24 @@
  */
 package snake;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author alu53788313f
  */
 public class Game extends javax.swing.JFrame {
 
+    private static boolean gameStarted;
     /**
      * Creates new form Game
      */
     public Game() {
         initComponents();
         board.setScore(scoreBoard);
+        board.setParentFrame(this);
+        gameStarted = false;
     }
 
     /**
@@ -36,7 +42,7 @@ public class Game extends javax.swing.JFrame {
         jMenuInitGame = new javax.swing.JMenuItem();
         jMenuReset = new javax.swing.JMenuItem();
         jMenuEdit = new javax.swing.JMenu();
-        jMenuItemChangeColorSnake = new javax.swing.JMenuItem();
+        jMenuItemChangeDifficulty = new javax.swing.JMenuItem();
 
         javax.swing.GroupLayout board1Layout = new javax.swing.GroupLayout(board1);
         board1.setLayout(board1Layout);
@@ -84,8 +90,13 @@ public class Game extends javax.swing.JFrame {
 
         jMenuEdit.setText("Edit");
 
-        jMenuItemChangeColorSnake.setText("ChangeColorSnake");
-        jMenuEdit.add(jMenuItemChangeColorSnake);
+        jMenuItemChangeDifficulty.setText("Change Difficulty");
+        jMenuItemChangeDifficulty.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemChangeDifficultyActionPerformed(evt);
+            }
+        });
+        jMenuEdit.add(jMenuItemChangeDifficulty);
 
         jMenuBar1.add(jMenuEdit);
 
@@ -96,8 +107,19 @@ public class Game extends javax.swing.JFrame {
 
     private void jMenuInitGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuInitGameActionPerformed
         // TODO add your handling code here:
+        resetDifficulty();
+        gameStarted = true;
+        changeDifficulty();
         board.initGame();
     }//GEN-LAST:event_jMenuInitGameActionPerformed
+
+    private void jMenuItemChangeDifficultyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemChangeDifficultyActionPerformed
+        // TODO add your handling code here:
+        resetDifficulty();
+        board.getTimer().stop();
+        changeDifficulty();
+        board.initGame();
+    }//GEN-LAST:event_jMenuItemChangeDifficultyActionPerformed
 
     /**
      * @param args the command line arguments
@@ -134,6 +156,49 @@ public class Game extends javax.swing.JFrame {
         });
     }
 
+    private void changeDifficulty() {
+        JFrame frame = new JFrame();
+        if (gameStarted) {
+           
+            String[] options = new String[3];
+            options[0] = new String("Hard");
+            options[1] = new String("Medium");
+            options[2] = new String("Easy");
+            int gameMode = JOptionPane.showOptionDialog(frame.getContentPane(), "Select The Game Difficulty", "GameMode", 0, JOptionPane.INFORMATION_MESSAGE, null, options, null);
+            switch (gameMode) {
+                case 0:
+                    board.hardMode = true;
+                    break;
+                case 1:
+                    board.mediumMode = true;
+                    break;
+                case 2:
+                    board.easyMode = true;
+                    break;
+                default:
+                    board.mediumMode = true;
+                    break;
+            }
+        }
+        else {
+            JOptionPane.showMessageDialog(frame, "Please initialize first the game ", "Error", JOptionPane.ERROR_MESSAGE);
+            
+        }
+    }
+
+    private void resetDifficulty() {
+        board.hardMode = false;
+        board.mediumMode = false;
+        board.easyMode = false;
+    }
+    
+    public static Boolean getGameStarted(){
+        return gameStarted;
+    }
+    
+    public static void setGameStarted(Boolean b){
+        gameStarted = b;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private snake.Board board;
     private snake.Board board1;
@@ -141,7 +206,7 @@ public class Game extends javax.swing.JFrame {
     private javax.swing.JMenu jMenuEdit;
     private javax.swing.JMenu jMenuFile;
     private javax.swing.JMenuItem jMenuInitGame;
-    private javax.swing.JMenuItem jMenuItemChangeColorSnake;
+    private javax.swing.JMenuItem jMenuItemChangeDifficulty;
     private javax.swing.JMenuItem jMenuReset;
     private snake.ScoreBoard scoreBoard;
     // End of variables declaration//GEN-END:variables
