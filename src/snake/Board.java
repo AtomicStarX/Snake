@@ -25,8 +25,8 @@ public class Board extends JPanel implements ActionListener {
 
     private JFrame parentFrame;
 
-    public static final int NUM_COLS = 30;
-    public static final int NUM_ROWS = 30;
+    public static final int NUM_COLS = 60;
+    public static final int NUM_ROWS = 60;
 
     private int deltaTime;
     private int foodCounter;
@@ -38,6 +38,7 @@ public class Board extends JPanel implements ActionListener {
     private Timer timer;
     private IncrementScore scoreDelegete;
 
+    private boolean gamePaused;
     private boolean turning;
     public boolean easyMode;
     public boolean mediumMode;
@@ -47,35 +48,46 @@ public class Board extends JPanel implements ActionListener {
     MyKeyAdapter keyAdepter;
 
     class MyKeyAdapter extends KeyAdapter {
-        
+
         //keyBoard Methods
         @Override
         public void keyPressed(KeyEvent e) {
 
             if (!turning) {
-                turning = true;
+
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_LEFT:
                         if (snake.getDirection() != DirectionType.RIGHT) {
                             snake.setDirectionType(DirectionType.LEFT);
+                            turning = true;
                         }
                         break;
                     case KeyEvent.VK_RIGHT:
                         if (snake.getDirection() != DirectionType.LEFT) {
                             snake.setDirectionType(DirectionType.RIGHT);
+                            turning = true;
                         }
                         break;
                     case KeyEvent.VK_UP:
                         if (snake.getDirection() != DirectionType.DOWN) {
                             snake.setDirectionType(DirectionType.UP);
+                            turning = true;
                         }
                         break;
                     case KeyEvent.VK_DOWN:
                         if (snake.getDirection() != DirectionType.UP) {
                             snake.setDirectionType(DirectionType.DOWN);
+                            turning = true;
                         }
                         break;
                     case KeyEvent.VK_SPACE:
+                        if (!gamePaused) {
+                            gamePaused = true;
+                            timer.stop();
+                        } else {
+                            gamePaused = false;
+                            timer.start();
+                        }
                         break;
                     case KeyEvent.VK_ENTER:
                         break;
@@ -87,7 +99,7 @@ public class Board extends JPanel implements ActionListener {
             }
         }
     }
-    
+
 //Constructor
     public Board() {
         super();
@@ -115,7 +127,7 @@ public class Board extends JPanel implements ActionListener {
         snake = new Snake();
         timer = new Timer(deltaTime, this);
         turning = false;
-        
+        gamePaused = false;
 
     }
 
@@ -156,15 +168,50 @@ public class Board extends JPanel implements ActionListener {
         this.scoreDelegete = scorer;
     }
 
+    public void changeColorSnake(Color color, boolean b) {
+
+        if (b) {
+            snake.changeColorSnakeHead(color);
+        }
+        if (!b) {
+            snake.changeColorSnakeBody(color);
+        }
+        Game.rainbowColor = false;
+
+    }
+
+    public void randomBackgroundColor() {
+
+        int r = (int) (Math.random() * 256);
+        int g = (int) (Math.random() * 256);
+        int b = (int) (Math.random() * 256);
+
+        Color newColorRGB = new Color(r, g, b);
+
+        if (!Game.rainbowColor) {
+            if (newColorRGB.equals(snake.getBodyColor()) || newColorRGB.equals(snake.getHeadColor()) || newColorRGB.equals(food.getColor())) {
+                randomBackgroundColor();
+            }
+        }
+
+        setBackground(newColorRGB);
+    }
 //Game's Loop
+
     @Override
     public void actionPerformed(ActionEvent ae) {
         if (!checkColision()) {
+            if(Game.epilepsiaMode){
+                randomBackgroundColor();
+            }
             if (snake.canEat(food)) {
                 foodCounter++;
                 snake.moveSnake(true);
                 food = Food.createANewFood(snake);
                 scoreDelegete.increment(100);
+                if (Game.rainbowBackgroundColor) {
+                        randomBackgroundColor();
+                    }
                 if ((foodCounter % specialFoodDifficulty) == 0) {
                     specialFood = new SpecialFood(this);
                 }
@@ -228,18 +275,18 @@ public class Board extends JPanel implements ActionListener {
     public void removeSpecialFood() {
         specialFood = null;
     }
-    
+
 //GameOver Method
     private void gameOver() {
         if (checkColision()) {
             removeKeyListener(keyAdepter);
             timer.stop();
-            if (Game.getGameStarted()) {
+            if (Game.gameStarted) {
                 int score = ScoreBoard.getScore();
                 RecordsDialog d = new RecordsDialog(parentFrame, true, score, this);
                 d.setVisible(true);
             }
-            Game.setGameStarted(false);
+            Game.gameStarted = false;
         }
 
     }

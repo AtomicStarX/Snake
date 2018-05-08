@@ -1,0 +1,5 @@
+2500, Write Your Name Or Nickname
+1300, Write Your Name Or Nickname
+1000, Write Your Name Or Nickname
+800, Write Your Name Or Nickname
+700, Write Your Name Or Nickname

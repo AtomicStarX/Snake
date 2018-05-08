@@ -74,7 +74,7 @@ public class RecordsDialog extends javax.swing.JDialog {
 
         JLabelCurrentScore.setText("Your score: " + score);
 
-        if (score <=+ minRecord && listOfRecords.size() == 5 ) {
+        if (score <= minRecord && listOfRecords.size() == 5 ) {
             jLabelName.setVisible(false);
             jTextFieldName.setVisible(false);
         }

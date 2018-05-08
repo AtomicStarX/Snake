@@ -23,11 +23,12 @@ public class Node {
         this.row = row;
         this.col = col;
         this.color = color;
-        arrColors = new Color[]{Color.MAGENTA, Color.PINK, Color.ORANGE, Color.YELLOW, Color.LIGHT_GRAY, Color.GREEN, Color.RED, Color.BLUE, Color.BLACK};
+        arrColors = new Color[]{Color.MAGENTA, Color.PINK, Color.ORANGE, Color.YELLOW,
+                                    Color.LIGHT_GRAY, Color.GREEN, Color.RED, Color.BLUE, Color.BLACK};
 
     }
 
-    public void randomColor() {
+    public Color randomColor(Color headColor) {
         int randomNumber = (int) (Math.random() * arrColors.length);
         switch (randomNumber) {
             case 0:
@@ -62,8 +63,14 @@ public class Node {
                 break;
 
         }
+        if(color.equals(headColor)){
+            return randomColor(headColor);
+        }
+        return color;
     }
-
+    
+//Getters And Setters
+    
     public int getRow() {
         return row;
     }
