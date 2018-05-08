@@ -267,14 +267,8 @@ public class Game extends javax.swing.JFrame {
                 if (JOptionPane.showConfirmDialog(null, "ARE YOU RETARD OR SOMETHING ?????????????????", "WARNING", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                     rainbowColor = true;
                     epilepsiaMode = true;
-                } else {
-                    System.exit(0);
-                }
-            } else {
-                System.exit(0);
-            }
-        } else {
-            System.exit(0);
+                } 
+            } 
         }
 
 
